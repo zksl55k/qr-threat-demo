@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LinkedIn - Amanda</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrious/4.0.2/qrious.min.js"></script>
+<style>
+* { margin:0; padding:0; box-sizing:border-box; }
+body { font-family:Courier New,monospace; background:#0a0a0a; }
+.screen { display:none; min-height:100vh; flex-direction:column; align-items:center; justify-content:center; padding:32px 20px; }
+.screen.active { display:flex; }
+.prog-wrap { width:100%; max-width:680px; height:3px; background:#111; border-radius:2px; margin-bottom:24px; }
+.prog-fill { height:100%; border-radius:2px; }
+.btn { margin-top:24px; background:transparent; font-family:Courier New,monospace; font-size:0.85rem; padding:12px 32px; border-radius:4px; cursor:pointer; letter-spacing:0.1em; }
+.btn-green { border:1px solid #00ff41; color:#00ff41; }
+.btn-green:hover { background:#00ff41; color:#0a0a0a; }
+.btn-blue { border:1px solid #4fc3f7; color:#4fc3f7; }
+.btn-blue:hover { background:#4fc3f7; color:#0a0a0a; }
+.btn-dark { border:none; background:#333; color:white; font-family:sans-serif; border-radius:8px; }
+.term-body { padding:20px; font-size:0.82rem; line-height:2; text-align:left; color:#00ff41; }
+.rrow { display:flex; border-bottom:1px solid #0f2040; padding:6px 0; font-size:0.8rem; text-align:left; }
+.rk { color:#4fc3f7; min-width:200px; flex-shrink:0; }
+.rv { color:#e0e0e0; word-break:break-all; }
+.sec { color:#4fc3f7; font-size:0.7rem; letter-spacing:0.2em; margin:16px 0 8px; border-left:3px solid #4fc3f7; padding-left:8px; text-align:left; }
+.badge { background:#ff4444; color:black; font-size:0.75rem; padding:7px 16px; border-radius:3px; letter-spacing:0.08em; font-weight:900; display:inline-block; margin:4px; }
+.badge2 { background:#00ff41; color:black; font-size:0.75rem; padding:7px 16px; border-radius:3px; letter-spacing:0.08em; font-weight:900; display:inline-block; margin:4px; }
+@keyframes shake { 0%,100%{transform:rotate(-5deg);} 50%{transform:rotate(5deg);} }
+@media print { #s0 { display:flex !important; } #s1,#s2,#s3,#s4 { display:none !important; } }
+</style>
+</head>
+<body>
+
+<div class="screen active" id="s0" style="background:#f0f4f8;font-family:sans-serif;">
+  <h1 style="font-size:1.1rem;color:#333;text-align:center;margin-bottom:8px;">Resume Preview - hit Print to add to your resume</h1>
+  <div style="background:#fff3cd;border:1px solid #ffc107;border-radius:8px;padding:10px 16px;max-width:300px;text-align:center;margin-bottom:16px;font-size:0.78rem;color:#856404;">
+    This is a <strong>security awareness demo</strong> — not a real threat. Built by Amanda as a portfolio project for a Threat Collections Engineer role.
+  </div>
+  <div style="background:white;border-radius:20px;padding:28px;display:flex;flex-direction:column;align-items:center;gap:14px;width:300px;box-shadow:0 4px 20px rgba(0,0,0,0.1);">
+    <div style="font-size:1rem;color:#444;font-weight:600;text-align:center;">Connect with me on <span style="color:#0077B5;">LinkedIn</span></div>
+    <canvas id="qr" style="border-radius:10px;border:3px solid #0077B5;"></canvas>
+    <div style="font-size:0.75rem;color:#aaa;">Scan with your camera</div>
+  </div>
+  <button class="btn btn-dark" style="margin-top:16px;padding:10px 22px;" onclick="goTo('s3')">Simulate what a scanner sees</button>
+</div>
+
+<div class="screen" id="s3" style="background:#0a0a0a;text-align:center;">
+  <div class="prog-wrap"><div class="prog-fill" style="width:25%;background:#ff4444;"></div></div>
+  <div style="font-size:4rem;margin-bottom:16px;display:inline-block;animation:shake 0.6s infinite;">X_X</div>
+  <div style="font-size:2.5rem;font-weight:900;color:#ff4444;text-shadow:0 0 30px #ff4444;margin-bottom:20px;">OOPS.</div>
+  <div style="color:#ff9999;font-size:0.9rem;line-height:2;max-width:500px;margin-bottom:28px;">
+    Never blindly trust a QR code.<br><br>
+    You just demonstrated exactly why <strong style="color:white;">Threat Intelligence</strong> matters.<br><br>
+    Malicious QR codes can redirect to phishing sites, drop malware,
+    or steal credentials - and most people scan without thinking twice.
+  </div>
+  <button class="btn btn-green" onclick="goTo('s1')">[ SEE HOW THIS WORKS ]</button>
+</div>
+
+<div class="screen" id="s1" style="background:#0a0a0a;">
+  <div class="prog-wrap"><div class="prog-fill" style="width:50%;background:#00ff41;"></div></div>
+  <div style="background:#0d1117;border:1px solid #00ff41;border-radius:8px;width:100%;max-width:680px;">
+    <div style="background:#161b22;padding:10px 16px;display:flex;align-items:center;gap:8px;border-bottom:1px solid #00ff41;">
+      <span style="width:12px;height:12px;border-radius:50%;background:#ff5f57;display:inline-block;"></span>
+      <span style="width:12px;height:12px;border-radius:50%;background:#febc2e;display:inline-block;"></span>
+      <span style="width:12px;height:12px;border-radius:50%;background:#28c840;display:inline-block;"></span>
+      <span style="margin-left:8px;font-size:0.75rem;color:#888;">yara-scanner v2.4.1 - live feed</span>
+    </div>
+    <div class="term-body">
+      <span style="color:#444;">$ yara --scan-qr-event --ruleset=threat_collections.yar</span><br>
+      <span style="color:#febc2e;">[*] QR scan event detected...</span><br>
+      <span>[+] Loaded 3 rules from threat_collections.yar</span><br><br>
+      <span style="color:#fff;">rule SuspiciousQRScanner {</span><br>
+      <span style="color:#4fc3f7;">&nbsp;&nbsp;meta:</span><br>
+      <span style="color:#4fc3f7;">&nbsp;&nbsp;&nbsp;&nbsp;description = "Detects unsuspecting QR scanners"</span><br>
+      <span style="color:#4fc3f7;">&nbsp;&nbsp;&nbsp;&nbsp;author = "Amanda - Threat Collections"</span><br>
+      <span style="color:#4fc3f7;">&nbsp;&nbsp;&nbsp;&nbsp;severity = "HIGH"</span><br>
+      <span style="color:#fff;">&nbsp;&nbsp;strings:</span><br>
+      <span>&nbsp;&nbsp;&nbsp;&nbsp;$ua = "Mozilla" nocase</span><br>
+      <span>&nbsp;&nbsp;&nbsp;&nbsp;$mob = "Mobile" nocase</span><br>
+      <span style="color:#fff;">&nbsp;&nbsp;condition:</span><br>
+      <span style="color:#ff4444;">&nbsp;&nbsp;&nbsp;&nbsp;$ua and ($mob or $qr)</span><br>
+      <span style="color:#fff;">}</span><br><br>
+      <span style="color:#ff4444;">[!] MATCH: SuspiciousQRScanner</span><br>
+      <span style="color:#ff4444;">[!] Target acquired. Initiating enrichment pipeline...</span>
+    </div>
+  </div>
+  <button class="btn btn-blue" onclick="goTo('s2')">[ CONTINUE TO THREAT REPORT ]</button>
+</div>
+
+<div class="screen" id="s2" style="background:#05080f;">
+  <div class="prog-wrap"><div class="prog-fill" style="width:75%;background:#4fc3f7;"></div></div>
+  <div style="background:#080d1a;border:1px solid #4fc3f7;border-radius:8px;width:100%;max-width:680px;">
+    <div style="background:#0d1b2e;padding:16px 20px;border-bottom:1px solid #4fc3f7;display:flex;justify-content:space-between;align-items:center;">
+      <span style="color:#4fc3f7;font-weight:bold;letter-spacing:0.15em;">THREAT INTEL REPORT</span>
+      <span style="background:#ff4444;color:white;font-size:0.7rem;padding:4px 10px;border-radius:3px;font-weight:bold;">RISK: HIGH</span>
+    </div>
+    <div style="padding:20px;">
+      <div class="sec">SUBJECT METADATA</div>
+      <div class="rrow"><span class="rk">Timestamp (UTC)</span><span class="rv" id="ts"></span></div>
+      <div class="rrow"><span class="rk">User Agent</span><span class="rv" id="ua"></span></div>
+      <div class="rrow"><span class="rk">Platform</span><span class="rv" id="plat"></span></div>
+      <div class="rrow"><span class="rk">Screen Resolution</span><span class="rv" id="res"></span></div>
+      <div class="rrow"><span class="rk">Timezone</span><span class="rv" id="tz"></span></div>
+      <div class="rrow"><span class="rk">Language</span><span class="rv" id="lang"></span></div>
+      <div class="sec">SIMULATED IOCs</div>
+      <div class="rrow"><span class="rk">Simulated IP</span><span class="rv" style="color:#ff6b6b;" id="fakeip"></span></div>
+      <div class="rrow"><span class="rk">Geo (Simulated)</span><span class="rv" style="color:#ff6b6b;" id="fakegeo"></span></div>
+      <div class="rrow"><span class="rk">ASN (Simulated)</span><span class="rv" style="color:#febc2e;" id="fakeasn"></span></div>
+      <div class="rrow"><span class="rk">Threat Category</span><span class="rv" style="color:#ff6b6b;">PHISHING_SUSCEPTIBLE</span></div>
+      <div class="rrow"><span class="rk">Confidence Score</span><span class="rv" style="color:#ff6b6b;">94%</span></div>
+      <div class="sec">YARA RULES MATCHED</div>
+      <div class="rrow"><span class="rk">SuspiciousQRScanner</span><span class="rv" style="color:#ff6b6b;">MATCH</span></div>
+      <div class="rrow"><span class="rk">MobileDeviceTarget</span><span class="rv" style="color:#ff6b6b;">MATCH</span></div>
+      <div class="rrow"><span class="rk">NoVPNDetected</span><span class="rv" style="color:#febc2e;">PROBABLE</span></div>
+      <div class="sec">RECOMMENDED ACTION</div>
+      <div class="rrow"><span class="rk">Disposition</span><span class="rv" style="color:#ff6b6b;">BLOCK + ALERT</span></div>
+      <div class="rrow"><span class="rk">TTP Reference</span><span class="rv">T1566.002 - Spearphishing Link</span></div>
+      <div class="rrow"><span class="rk">MITRE ATT&amp;CK</span><span class="rv">TA0001 - Initial Access</span></div>
+    </div>
+  </div>
+  <button class="btn btn-green" onclick="goTo('s4')" style="margin-top:24px;">[ CONTINUE TO REVEAL ]</button>
+</div>
+
+<div class="screen" id="s4" style="background:#0a0a0a;text-align:center;">
+  <div class="prog-wrap"><div class="prog-fill" style="width:100%;background:#00ff41;"></div></div>
+  <div style="font-size:2rem;font-weight:900;color:#00ff41;text-shadow:0 0 20px #00ff41;margin-bottom:20px;">Here is the real link.</div>
+  <div style="background:#111;border:1px solid #333;border-radius:8px;padding:20px 28px;max-width:500px;width:100%;margin-bottom:24px;">
+    <p style="color:#aaa;font-size:0.85rem;margin-bottom:10px;">Connect with me on LinkedIn:</p>
+    <a href="https://www.linkedin.com/in/amanda01010/" target="_blank" style="color:#4fc3f7;text-decoration:none;font-size:1rem;font-weight:bold;">linkedin.com/in/amanda01010</a>
+  </div>
+  <div>
+    <div class="badge">THREAT COLLECTIONS ENGINEER - ANTHROPIC APPLICANT</div><br>
+    <div class="badge2">[ NO REAL DATA WAS COLLECTED ]</div>
+  </div>
+</div>
+
+<script>
+function goTo(id) {
+  var all = document.querySelectorAll('.screen');
+  for (var i = 0; i < all.length; i++) all[i].classList.remove('active');
+  document.getElementById(id).classList.add('active');
+  window.scrollTo(0,0);
+}
+
+window.onload = function() {
+  new QRious({
+    element: document.getElementById('qr'),
+    value: 'https://1lnkedin.netlify.app/?scan=true',
+    size: 220,
+    background: 'white',
+    foreground: '#0077B5',
+    level: 'H'
+  });
+
+  var ips  = ['185.220.101.47','91.108.4.200','198.50.163.12','45.33.32.156','104.21.88.43'];
+  var geos = ['Moscow, RU','Frankfurt, DE','Amsterdam, NL','Ashburn, VA, US','Toronto, CA'];
+  var asns = ['AS20473 - Choopa LLC','AS3209 - Vodafone DE','AS60781 - LeaseWeb NL','AS14061 - DigitalOcean','AS13335 - Cloudflare'];
+  var i = Math.floor(Math.random() * ips.length);
+
+  document.getElementById('ts').textContent   = new Date().toUTCString();
+  var ua = navigator.userAgent;
+  document.getElementById('ua').textContent   = ua.length > 55 ? ua.substring(0,55)+'...' : ua;
+  document.getElementById('plat').textContent = navigator.platform || 'Unknown';
+  document.getElementById('res').textContent  = screen.width+'x'+screen.height+' @ '+(window.devicePixelRatio||1)+'x';
+  document.getElementById('tz').textContent   = Intl.DateTimeFormat().resolvedOptions().timeZone;
+  document.getElementById('lang').textContent = navigator.language;
+  document.getElementById('fakeip').textContent  = ips[i];
+  document.getElementById('fakegeo').textContent = geos[i];
+  document.getElementById('fakeasn').textContent = asns[i];
+
+  if (window.location.search.indexOf('scan=true') !== -1) {
+    goTo('s3');
+  }
+};
+</script>
+</body>
+</html>
